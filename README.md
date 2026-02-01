@@ -111,10 +111,14 @@ graph LR
     F --> G[Onboarding Journey]
     G --> H[User Dashboard]
     
-    style A fill:#e1f5ff
-    style C fill:#ffe1f5
-    style F fill:#f5ffe1
-    style H fill:#fff5e1
+    style A fill:#3b82f6,stroke:#1e40af,stroke-width:2px,color:#ffffff
+    style B fill:#8b5cf6,stroke:#6d28d9,stroke-width:2px,color:#ffffff
+    style C fill:#ec4899,stroke:#be185d,stroke-width:2px,color:#ffffff
+    style D fill:#10b981,stroke:#047857,stroke-width:2px,color:#ffffff
+    style E fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#ffffff
+    style F fill:#14b8a6,stroke:#0f766e,stroke-width:2px,color:#ffffff
+    style G fill:#6366f1,stroke:#4338ca,stroke-width:2px,color:#ffffff
+    style H fill:#f97316,stroke:#ea580c,stroke-width:2px,color:#ffffff
 ```
 
 </div>
@@ -356,7 +360,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 <p>
 <a href="https://github.com/atharvax26"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/></a>
-<a href="www.linkedin.com/in/atharva-bhadange-71112728b"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+<a href="https://www.linkedin.com/in/atharva-bhadange-71112728b"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
 <a href="mailto:atharva.bhadange18403@sakec.ac.in"><img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/></a>
 </p>
 
