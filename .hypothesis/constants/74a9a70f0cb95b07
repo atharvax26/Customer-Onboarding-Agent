@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\routers\analytics.py
+# hypothesis_version: 6.151.5
+
+['/activation-rates', '/dashboard', '/dropoff-analysis', '/engagement-trends', 'message']

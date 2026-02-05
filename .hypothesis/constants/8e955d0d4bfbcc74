@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\anthropic\lib\tools\_beta_functions.py
+# hypothesis_version: 6.151.5
+
+['AsyncFunctionT', 'FunctionT', 'defer_loading', 'description', 'input_schema', 'mcp_server_name', 'name', 'object', 'properties', 'type']

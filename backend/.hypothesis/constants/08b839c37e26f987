@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\routers\analytics.py
+# hypothesis_version: 6.151.5
+
+['/activation-rates', '/dashboard', '/dropoff-analysis', '/engagement-trends', '/export', '/filters/roles', '/health', '/metrics/refresh', '/metrics/summary', '/real-time-metrics', '< 200ms', 'Filter by user role', 'access_level', 'accessed_by', 'activation_metrics', 'activation_rate', 'active_sessions', 'admin', 'admin_user', 'analytics', 'api_response_time', 'available_roles', 'average_engagement', 'business_user', 'data', 'data_points', 'database_health', 'engagement_trends', 'export_format', 'generated_at', 'good', 'healthy', 'json', 'last_updated', 'limited', 'message', 'metrics', 'metrics_available', 'operational', 'real_time_metrics', 'refreshed_at', 'refreshed_by', 'role_filter', 'service', 'status', 'system_status', 'target_user_id', 'timestamp', 'total_users', 'trend_direction', 'user_id', 'user_role']

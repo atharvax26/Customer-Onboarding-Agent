@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\passlib\exc.py
+# hypothesis_version: 6.151.5
+
+['%s (%s)', '%s.%s', '<unnamed>', 'None', 'Token did not match', 'Token not acceptable', 'Unrecognized token', '__builtin__', 'builtins', 'bytes', 'chars', 'crypt.crypt()', 'expire_time', 'hash', 'malformed %s hash', 'not a valid %s hash', 'unicode or bytes', 'zero-padded rounds']

@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\routers\onboarding.py
+# hypothesis_version: 6.151.5
+
+['/admin/all-sessions', '/api/analytics', '/api/auth', '/api/onboarding', '/business/reports', '/developer/api-docs', '/sessions', '/start', 'Business reports', 'Session not found', 'accessed_by', 'activation_rates', 'admin_user', 'api_endpoints', 'completion_metrics', 'message', 'reports', 'sessions', 'total_sessions', 'user_engagement', 'user_id', 'user_role']

@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\routers\engagement.py
+# hypothesis_version: 6.151.5
+
+[0.1, 0.2, 0.3, 0.4, '/detect-inactivity', '/score', '/score/calculate', '/score/history', '/track-interaction', '/track-time-activity', 'calculated_at', 'inactivity_detected', 'inactivity_penalty', 'interactions', 'message', 'metrics', 'session_id', 'step_completion', 'step_completion_rate', 'time_spent', 'total_score', 'user_id', 'weights']

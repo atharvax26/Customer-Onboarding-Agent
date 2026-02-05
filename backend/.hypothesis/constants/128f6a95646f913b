@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\services\claude_client.py
+# hypothesis_version: 6.151.5
+
+[0.1, 0.25, 1.0, 1.5, 30.0, 60.0, 100, 400, 401, 429, 500, 502, 4000, 'ANTHROPIC_API_KEY', 'content', 'document', 'error', 'healthy', 'model', 'model_used', 'processed_at', 'processing_time', 'response_time', 'role', 'status', 'summary', 'tasks', 'text', 'timestamp', 'unhealthy', 'user']

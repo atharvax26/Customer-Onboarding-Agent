@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\main.py
+# hypothesis_version: 6.151.5
+
+[8000, '*', '/', '/api/analytics', '/api/auth', '/api/engagement', '/api/onboarding', '/api/scaledown', '/health', '0.0.0.0', '1.0.0', '__main__', 'analytics', 'authentication', 'document-processing', 'engagement', 'healthy', 'message', 'onboarding', 'running', 'status']

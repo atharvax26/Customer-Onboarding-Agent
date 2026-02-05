@@ -1,0 +1,225 @@
+.real-time-feedback {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 280px;
+}
+
+.feedback-metric {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.feedback-metric:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.metric-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.metric-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.metric-description {
+  font-size: 0.75rem;
+  color: #718096;
+  margin-top: 0.25rem;
+}
+
+/* Engagement Score Specific Styles */
+.engagement-score .score-bar {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.score-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease, background-color 0.3s ease;
+}
+
+.score-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+  color: #4a5568;
+}
+
+/* Feedback Messages */
+.feedback-message {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #667eea;
+  animation: slideIn 0.3s ease-out;
+}
+
+.feedback-message.positive {
+  border-left-color: #38a169;
+  background: rgba(240, 253, 244, 0.95);
+}
+
+.feedback-message.warning {
+  border-left-color: #ed8936;
+  background: rgba(255, 250, 240, 0.95);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.message-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.message-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.message-text {
+  font-size: 0.875rem;
+  color: #2d3748;
+  line-height: 1.4;
+}
+
+.message-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: #a0aec0;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.message-close:hover {
+  background: rgba(160, 174, 192, 0.2);
+  color: #4a5568;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .real-time-feedback {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+
+  .feedback-metric {
+    padding: 0.75rem;
+  }
+
+  .metric-header {
+    margin-bottom: 0.25rem;
+  }
+
+  .metric-label {
+    font-size: 0.8rem;
+  }
+
+  .metric-value {
+    font-size: 1.1rem;
+  }
+
+  .message-text {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .real-time-feedback {
+    position: relative;
+    top: auto;
+    right: auto;
+    left: auto;
+    margin: 1rem 0;
+  }
+
+  .feedback-metric {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Animation for metric updates */
+.metric-value {
+  transition: all 0.3s ease;
+}
+
+.metric-value.updated {
+  animation: valueUpdate 0.5s ease;
+}
+
+@keyframes valueUpdate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+    color: #667eea;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Pulse animation for low engagement */
+.engagement-score.low-engagement {
+  animation: lowEngagementPulse 2s infinite;
+}
+
+@keyframes lowEngagementPulse {
+  0%, 100% {
+    border-color: rgba(229, 62, 62, 0.3);
+  }
+  50% {
+    border-color: rgba(229, 62, 62, 0.8);
+  }
+}

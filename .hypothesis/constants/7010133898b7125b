@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\routers\analytics.py
+# hypothesis_version: 6.151.5
+
+[0.1, 75.5, 150, 300, 10000, '/activation-rates', '/dashboard', '/dropoff-analysis', '/engagement-trends', '2024-01-01', '2024-01-02', '2024-01-03', '45 minutes', '50MB', 'above_average', 'accessed_by', 'activation_rate', 'active_sessions', 'admin_alerts', 'admin_user', 'all_roles_data', 'analytics', 'average_engagement', 'completion_rate', 'current_user_id', 'data', 'database_size', 'date', 'dropoff_points', 'end_date', 'error_rate', 'good', 'message', 'metrics', 'my_team_sessions', 'my_team_users', 'requested_role', 'role_specific_data', 'score', 'sessions_completed', 'start_date', 'step', 'system_health', 'target_user_id', 'team_performance', 'time_to_completion', 'total_api_calls', 'total_sessions', 'total_users', 'trends', 'user_role']

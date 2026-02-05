@@ -1,0 +1,247 @@
+.step-content {
+  padding: 2rem;
+}
+
+.step-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.step-icon {
+  font-size: 3rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.step-info {
+  flex: 1;
+}
+
+.step-title {
+  color: #2d3748;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.2;
+}
+
+.step-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.step-time,
+.step-role {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #4a5568;
+  background: #f7fafc;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-weight: 500;
+}
+
+.step-body {
+  line-height: 1.6;
+}
+
+.step-description {
+  margin-bottom: 2rem;
+}
+
+.content-text {
+  color: #2d3748;
+  font-size: 1rem;
+}
+
+.content-text h1,
+.content-text h2,
+.content-text h3,
+.content-text h4 {
+  color: #2d3748;
+  margin: 1.5rem 0 1rem 0;
+  font-weight: 600;
+}
+
+.content-text h1 { font-size: 1.5rem; }
+.content-text h2 { font-size: 1.25rem; }
+.content-text h3 { font-size: 1.125rem; }
+.content-text h4 { font-size: 1rem; }
+
+.content-text p {
+  margin-bottom: 1rem;
+}
+
+.content-text ul,
+.content-text ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.content-text li {
+  margin-bottom: 0.5rem;
+}
+
+.content-text code {
+  background: #f7fafc;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.875rem;
+  color: #e53e3e;
+}
+
+.content-text pre {
+  background: #2d3748;
+  color: #e2e8f0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.content-text pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+.step-tasks {
+  background: #f7fafc;
+  border-left: 4px solid #667eea;
+  padding: 1.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  margin-bottom: 2rem;
+}
+
+.step-tasks h3 {
+  color: #2d3748;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0;
+}
+
+.task-bullet {
+  color: #38a169;
+  font-weight: 600;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.task-text {
+  color: #2d3748;
+  line-height: 1.5;
+}
+
+.step-tips {
+  margin-top: 2rem;
+}
+
+.tip-box {
+  background: linear-gradient(135deg, #fef5e7 0%, #fed7aa 100%);
+  border: 1px solid #f6ad55;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.tip-box h4 {
+  color: #c05621;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tip-box p {
+  color: #744210;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .step-content {
+    padding: 1.5rem;
+  }
+
+  .step-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .step-icon {
+    font-size: 2.5rem;
+  }
+
+  .step-title {
+    font-size: 1.5rem;
+  }
+
+  .step-meta {
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .step-time,
+  .step-role {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .step-tasks {
+    padding: 1rem;
+  }
+
+  .tip-box {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .step-content {
+    padding: 1rem;
+  }
+
+  .step-title {
+    font-size: 1.25rem;
+  }
+
+  .step-meta {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .content-text {
+    font-size: 0.9rem;
+  }
+
+  .task-item {
+    gap: 0.5rem;
+  }
+}

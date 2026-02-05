@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\routers\onboarding.py
+# hypothesis_version: 6.151.5
+
+[123, '/admin/all-sessions', '/api/analytics', '/api/auth', '/api/onboarding', '/business/reports', '/developer/api-docs', '/progress/{user_id}', '/start', 'Business reports', 'Invalid user role', 'Onboarding started', 'Progress retrieved', 'Step advanced', 'Workflow Overview', 'accessed_by', 'activation_rates', 'admin_controls', 'admin_user', 'api_endpoints', 'business_value', 'can_access', 'code_examples', 'completion_metrics', 'content', 'message', 'next_step', 'reports', 'roi_metrics', 'session_id', 'step', 'system_config', 'technical_details', 'title', 'total_sessions', 'user_engagement', 'user_id', 'user_role']

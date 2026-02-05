@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\services\intervention_service.py
+# hypothesis_version: 6.151.5
+
+[30.0, 300, 'Admin', 'Business_User', 'Completion', 'Developer', 'Getting Started', 'Next Steps', 'Security Settings', 'System Configuration', 'User Management', 'contextual_help', 'engagement_score', 'generic_help', 'low_engagement_help', 'step_number', 'step_title', 'time_on_step', 'user_role']

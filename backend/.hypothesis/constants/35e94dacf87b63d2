@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\anthropic\resources\completions.py
+# hypothesis_version: 6.151.5
+
+[600, ',', '/v1/complete', 'AsyncCompletions', 'Completions', 'anthropic-beta', 'max_tokens_to_sample', 'metadata', 'model', 'prompt', 'stop_sequences', 'stream', 'temperature', 'top_k', 'top_p']

@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\pypdf\_reader.py
+# hypothesis_version: 6.151.5
+
+[b'\r\n', b'\r\n \t', b' ', b' obj', b'%', b'%%', b'%%E', b'%%EO', b'%%EOF', b'%PDF-', b'0123456789 \t', b'0123456789t', b'<<', b'f', b'j', b'n', b'obj', b'ref', b'startxref', b'trailer', b'x', b'xref', 10000, 65535, '/AcroForm', '/Catalog', '/Fields', '/First', '/Index', '/Kids', '/N', '/ObjStm', '/Pages', '/Parent', '/Prev', '/Root', '/Size', '/T', '/Type', '/W', '/XRef', '/XRefStm', '0', '9', 'Broken xref table', 'Cannot rebuild xref', 'EOF marker not found', 'Not encrypted file', 'PdfReader', 'Wrong password', 'application/pdf', 'b', 'backslashreplace', 'cannot read header', 'getbuffer', 'hint for mypy', 'mode', 'mypy', 'rb', 'startxref not found', 'utf-8']

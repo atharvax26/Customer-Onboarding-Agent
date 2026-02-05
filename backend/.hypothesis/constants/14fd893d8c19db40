@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\auth.py
+# hypothesis_version: 6.151.5
+
+[400, 'Bearer', 'HS256', 'Inactive user', 'SECRET_KEY', 'WWW-Authenticate', 'administration', 'api', 'auto', 'bcrypt', 'exp', 'focus', 'show_business_value', 'show_code_examples', 'show_system_config', 'show_user_management', 'sub', 'workflow']

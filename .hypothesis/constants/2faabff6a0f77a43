@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\services\document_processor.py
+# hypothesis_version: 6.151.5
+
+[400, 500, 1024, '.md', '.pdf', '.txt', 'Filename is required', 'application/pdf', 'content_type', 'cp1252', 'extension', 'filename', 'latin-1', 'size', 'text/markdown', 'text/plain', 'text/x-markdown', 'utf-16', 'utf-8']

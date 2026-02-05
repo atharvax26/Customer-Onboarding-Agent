@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\database.py
+# hypothesis_version: 6.151.5
+
+['Admin', 'Business_User', 'DATABASE_URL', 'Developer', 'Document', 'EngagementLog', 'InterventionLog', 'OnboardingSession', 'StepCompletion', 'User', 'abandoned', 'active', 'completed', 'document', 'documents', 'documents.id', 'engagement_logs', 'intervention_logs', 'onboarding_sessions', 'session', 'step_completions', 'user', 'users', 'users.id']

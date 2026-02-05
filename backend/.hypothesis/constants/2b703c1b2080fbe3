@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\aiosqlite\__init__.py
+# hypothesis_version: 6.151.5
+
+['Amethyst Reese', 'Connection', 'Cursor', 'DatabaseError', 'Error', 'IntegrityError', 'NotSupportedError', 'OperationalError', 'ProgrammingError', 'Row', 'Warning', '__version__', 'connect', 'paramstyle', 'register_adapter', 'register_converter', 'sqlite_version', 'sqlite_version_info']

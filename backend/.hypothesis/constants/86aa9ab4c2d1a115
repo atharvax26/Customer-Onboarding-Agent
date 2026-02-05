@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\aiosqlite\core.py
+# hypothesis_version: 6.151.5
+
+[0.01, 0.25, 'Connection', 'Connection closed', 'Cursor', 'DEFERRED', 'EXCLUSIVE', 'IMMEDIATE', 'aiosqlite', 'connect', 'executing %s', 'main', 'no active connection', 'utf-8']
