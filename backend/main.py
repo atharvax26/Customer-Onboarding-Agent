@@ -116,70 +116,38 @@ from app.routers import system
 app.include_router(system.router, prefix="/api/system", tags=["system-monitoring"])
 
 
+
+# Import static files handling
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse, JSONResponse
+
+# Serve static files
+# Ensure directory exists to prevent errors during local dev if not built
+if not os.path.exists("static"):
+    os.makedirs("static")
+
+# Mount the static directory
+app.mount("/assets", StaticFiles(directory="static/assets"), name="assets")
+
 @app.get("/")
-async def root():
-    """Root endpoint with basic status"""
-    logger.info("Root endpoint accessed")
-    return {
-        "message": "Customer Onboarding Agent API",
-        "status": "running",
-        "version": "1.0.0"
-    }
+async def serve_root():
+    """Serve the frontend index.html"""
+    if os.path.exists("static/index.html"):
+        return FileResponse("static/index.html")
+    return JSONResponse(content={"message": "Frontend not built. Please run npm run build in frontend directory and copy to backend/static."})
 
-
-@app.get("/health")
-async def health_check():
-    """Comprehensive health check endpoint"""
-    try:
-        health_status = await health_monitor.check_system_health()
-        return health_status
-    except Exception as e:
-        logger.error(
-            "Health check failed",
-            extra={"error": str(e)},
-            exc_info=True
-        )
-        return {
-            "status": "unhealthy",
-            "error": "Health check failed",
-            "timestamp": "2024-01-01T00:00:00Z"
-        }
-
-
-@app.get("/health/{component}")
-async def component_health_check(component: str):
-    """Check health of specific component"""
-    try:
-        component_health = await health_monitor.check_component_health(component)
-        return component_health.to_dict()
-    except Exception as e:
-        logger.error(
-            f"Component health check failed for {component}",
-            extra={"component": component, "error": str(e)},
-            exc_info=True
-        )
-        return {
-            "name": component,
-            "status": "unhealthy",
-            "error": str(e),
-            "timestamp": "2024-01-01T00:00:00Z"
-        }
-
-
-@app.get("/health-history")
-async def health_history(limit: int = 10):
-    """Get recent health check history"""
-    try:
-        history = health_monitor.get_health_history(limit)
-        return {"history": history}
-    except Exception as e:
-        logger.error(
-            "Failed to retrieve health history",
-            extra={"error": str(e)},
-            exc_info=True
-        )
-        return {"history": [], "error": str(e)}
-
+@app.get("/{full_path:path}")
+async def serve_spa(full_path: str):
+    """Catch-all for SPA routing"""
+    # Check if file exists in static (e.g. favicon.ico)
+    static_file = os.path.join("static", full_path)
+    if os.path.isfile(static_file):
+        return FileResponse(static_file)
+    
+    # Otherwise return index.html for SPA routing
+    if os.path.exists("static/index.html"):
+        return FileResponse("static/index.html")
+    return JSONResponse(status_code=404, content={"message": "File not found and frontend not built."})
 
 if __name__ == "__main__":
     import uvicorn
