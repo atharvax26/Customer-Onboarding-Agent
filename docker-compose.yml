@@ -9,7 +9,8 @@ services:
       - "8000:8000"
     environment:
       - DATABASE_URL=sqlite+aiosqlite:///./customer_onboarding.db
-      - CLAUDE_API_KEY=${CLAUDE_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - SECRET_KEY=${SECRET_KEY}
     volumes:
       - ./backend:/app
       - backend_data:/app/data
