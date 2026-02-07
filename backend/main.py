@@ -125,9 +125,12 @@ from fastapi.responses import FileResponse, JSONResponse
 # Ensure directory exists to prevent errors during local dev if not built
 if not os.path.exists("static"):
     os.makedirs("static")
+if not os.path.exists("static/assets"):
+    os.makedirs("static/assets")
 
-# Mount the static directory
-app.mount("/assets", StaticFiles(directory="static/assets"), name="assets")
+# Mount the static directory only if it exists
+if os.path.exists("static/assets"):
+    app.mount("/assets", StaticFiles(directory="static/assets"), name="assets")
 
 @app.get("/")
 async def serve_root():
