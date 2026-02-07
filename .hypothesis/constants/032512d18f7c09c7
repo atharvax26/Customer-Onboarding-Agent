@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\logging_config.py
+# hypothesis_version: 6.151.5
+
+[10485760, '%Y-%m-%d %H:%M:%S', '()', 'ERROR', 'INFO', 'LoggerAdapter', 'WARNING', 'Z', 'app', 'backupCount', 'class', 'component', 'console', 'context', 'datefmt', 'detailed', 'duration', 'error', 'error.log', 'error_file', 'exception', 'extra', 'file', 'filename', 'filters', 'format', 'formatter', 'formatters', 'function', 'handlers', 'json', 'level', 'line', 'logger', 'loggers', 'logs/app.log', 'maxBytes', 'message', 'module', 'operation', 'propagate', 'request_id', 'session_id', 'sqlalchemy.engine', 'standard', 'stream', 'success', 'timestamp', 'user_id', 'uvicorn', 'uvicorn.access', 'uvicorn.error', 'version']

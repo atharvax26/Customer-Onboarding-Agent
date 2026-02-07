@@ -23,18 +23,27 @@ router = APIRouter()
 
 @router.post("/start", response_model=OnboardingSessionResponse)
 async def start_onboarding(
-    document_id: int,
+    request_body: Dict[str, Any],
     current_user: User = Depends(get_current_active_user),
     db: AsyncSession = Depends(get_db)
 ):
     """Start a new onboarding session for the current user"""
     try:
+        document_id = request_body.get('document_id')
+        if not document_id:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="document_id is required"
+            )
+        
         engine = OnboardingEngine(db)
         session = await engine.start_onboarding_session(
             user_id=current_user.id,
             document_id=document_id
         )
         return session
+    except HTTPException:
+        raise
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

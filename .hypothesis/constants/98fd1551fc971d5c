@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\services\scaledown_service.py
+# hypothesis_version: 6.151.5
+
+[0.0, 100, 400, 404, 409, 500, 503, 'content_length', 'error', 'file_size', 'filename', 'has_summary', 'has_tasks', 'id', 'model_used', 'original_content', 'pending', 'processed', 'processed_at', 'processing_metadata', 'processing_status', 'processing_time', 'size', 'status', 'summary', 'summary_length', 'task_count', 'tasks', 'text', 'timestamp', 'unavailable', 'uploaded_at']

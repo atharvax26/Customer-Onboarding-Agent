@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\middleware.py
+# hypothesis_version: 6.151.5
+
+[120, '1; mode=block', 'DENY', 'Incoming request', 'Rate limit exceeded', 'Referrer-Policy', 'Request completed', 'Request failed', 'X-Frame-Options', 'X-Process-Time', 'X-Request-ID', 'X-XSS-Protection', 'client_ip', 'error', 'https', 'limit', 'method', 'nosniff', 'path', 'process_time', 'query_params', 'request_id', 'requests_count', 'status_code', 'unknown', 'user-agent', 'user_agent']

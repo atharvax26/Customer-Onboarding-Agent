@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useInteractionTracking } from '../../hooks/useInteractionTracking'
+import { useOnboarding, useEngagement } from '../../hooks/useApiClient'
 import ProgressIndicator from './ProgressIndicator'
 import StepContent from './StepContent'
 import StepNavigation from './StepNavigation'
 import RealTimeFeedback from '../feedback/RealTimeFeedback'
 import InteractionTracker from '../tracking/InteractionTracker'
+import InterventionSystem from '../intervention/InterventionSystem'
 import { OnboardingSession, OnboardingStep, OnboardingProgress } from '../../types/onboarding'
-import { onboardingApi } from '../../utils/api'
 import './OnboardingFlow.css'
 
 interface OnboardingFlowProps {
@@ -16,12 +17,23 @@ interface OnboardingFlowProps {
 
 const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ documentId }) => {
   const { user } = useAuth()
+  const { start, getCurrentStep, advanceStep, getProgress, getUserSessions, handleError } = useOnboarding()
+  const { getScore } = useEngagement()
   const [session, setSession] = useState<OnboardingSession | null>(null)
   const [currentStep, setCurrentStep] = useState<OnboardingStep | null>(null)
   const [progress, setProgress] = useState<OnboardingProgress | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [engagementScore, setEngagementScore] = useState<number | undefined>(undefined)
+  const [stepHistory, setStepHistory] = useState<OnboardingStep[]>([])
+  const [viewingHistoryIndex, setViewingHistoryIndex] = useState<number | null>(null)
+  const [isStepComplete, setIsStepComplete] = useState(false)
   const stepStartTime = useRef<number>(Date.now())
+
+  // Reset completion state when step changes
+  useEffect(() => {
+    setIsStepComplete(false)
+  }, [currentStep?.step_number])
 
   // Initialize interaction tracking for this onboarding session
   const { 
@@ -37,6 +49,28 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ documentId }) => {
     enableFocusTracking: true
   })
 
+  // Fetch engagement score periodically
+  useEffect(() => {
+    if (!user || !session) return
+
+    const fetchEngagementScore = async () => {
+      try {
+        const scoreData = await getScore()
+        setEngagementScore(scoreData.current_score)
+      } catch (error) {
+        console.error('Error fetching engagement score:', error)
+      }
+    }
+
+    // Initial fetch
+    fetchEngagementScore()
+
+    // Set up periodic fetching every 10 seconds
+    const intervalId = setInterval(fetchEngagementScore, 10000)
+
+    return () => clearInterval(intervalId)
+  }, [user, session, getScore])
+
   // Initialize onboarding session
   useEffect(() => {
     const initializeOnboarding = async () => {
@@ -46,47 +80,77 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ documentId }) => {
         setLoading(true)
         setError(null)
 
-        // Start new onboarding session
-        const newSession = await onboardingApi.startOnboarding(documentId)
-        setSession(newSession)
+        // Check if user already has an active session for this document
+        const existingSessions = await getUserSessions()
+        const activeSession = existingSessions.find(
+          (s: any) => s.document_id === documentId && s.status === 'active'
+        )
 
-        // Track onboarding start
-        trackCustomEvent('onboarding_started', {
-          document_id: documentId,
-          user_role: user.role,
-          session_id: newSession.id
-        })
+        let sessionToUse
+        if (activeSession) {
+          // Reuse existing active session
+          console.log('Reusing existing session:', activeSession.id)
+          sessionToUse = activeSession
+        } else {
+          // Start new onboarding session only if no active session exists
+          console.log('Creating new session for document:', documentId)
+          sessionToUse = await start(documentId)
+        }
+        
+        setSession(sessionToUse)
+
+        // Track onboarding start only for new sessions
+        if (!activeSession) {
+          trackCustomEvent('onboarding_started', {
+            document_id: documentId,
+            user_role: user.role,
+            session_id: sessionToUse.id
+          })
+        }
 
         // Get current step
-        const step = await onboardingApi.getCurrentStep(newSession.id)
+        const step = await getCurrentStep(sessionToUse.id)
         setCurrentStep(step)
+        setStepHistory([step]) // Initialize history with first step
+        setViewingHistoryIndex(null) // Not viewing history
         stepStartTime.current = Date.now()
 
-        // Track step start
-        trackCustomEvent('step_started', {
-          step_number: step.step_number,
-          step_title: step.title,
-          session_id: newSession.id
-        })
+        // Track step start only for new sessions
+        if (!activeSession) {
+          trackCustomEvent('step_started', {
+            step_number: step.step_number,
+            step_title: step.title,
+            session_id: sessionToUse.id
+          })
+        }
 
         // Get progress
-        const progressData = await onboardingApi.getProgress(newSession.id)
+        const progressData = await getProgress(sessionToUse.id)
         setProgress(progressData)
 
       } catch (err) {
         console.error('Failed to initialize onboarding:', err)
-        setError('Failed to start onboarding session. Please try again.')
+        setError(handleError(err))
       } finally {
         setLoading(false)
       }
     }
 
     initializeOnboarding()
-  }, [documentId, user])
+  }, [documentId, user, start, getCurrentStep, getProgress, getUserSessions, handleError, trackCustomEvent])
 
   const handleStepComplete = async () => {
     if (!session || !currentStep) return
 
+    // If viewing history, just move forward in history
+    if (viewingHistoryIndex !== null && viewingHistoryIndex < stepHistory.length - 1) {
+      const nextStep = stepHistory[viewingHistoryIndex + 1]
+      setCurrentStep(nextStep)
+      setViewingHistoryIndex(viewingHistoryIndex + 1)
+      return
+    }
+
+    // If at current step, advance to next step
     try {
       setLoading(true)
       
@@ -97,7 +161,7 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ documentId }) => {
       trackStepComplete(currentStep.step_number, timeSpent)
       
       // Advance to next step
-      await onboardingApi.advanceStep(session.id)
+      await advanceStep(session.id)
       
       // Track step advance
       if (currentStep.step_number < currentStep.total_steps) {
@@ -106,12 +170,22 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ documentId }) => {
       
       // Get updated step and progress
       const [updatedStep, updatedProgress] = await Promise.all([
-        onboardingApi.getCurrentStep(session.id),
-        onboardingApi.getProgress(session.id)
+        getCurrentStep(session.id),
+        getProgress(session.id)
       ])
       
       setCurrentStep(updatedStep)
       setProgress(updatedProgress)
+      
+      // Add new step to history if not already there
+      setStepHistory(prev => {
+        const exists = prev.some(s => s.step_number === updatedStep.step_number)
+        if (!exists) {
+          return [...prev, updatedStep]
+        }
+        return prev
+      })
+      setViewingHistoryIndex(null) // Reset to current view
       
       // Reset step timer for new step
       stepStartTime.current = Date.now()
@@ -137,7 +211,7 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ documentId }) => {
 
     } catch (err) {
       console.error('Failed to advance step:', err)
-      setError('Failed to advance to next step. Please try again.')
+      setError(handleError(err))
       
       // Track error
       trackCustomEvent('step_advance_error', {
@@ -151,15 +225,38 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ documentId }) => {
   }
 
   const handleStepBack = async () => {
-    // Note: Backend doesn't support going back, but we can track the attempt
+    if (!session || !currentStep) return
+    
+    // Check if we can go back
+    if (currentStep.step_number <= 1) {
+      // Already at first step
+      trackCustomEvent('back_button_clicked', {
+        step_number: currentStep.step_number,
+        session_id: session.id,
+        result: 'already_at_first_step'
+      })
+      return
+    }
+
+    // Track back button click
     trackButtonClick('back-button', 'Back')
     trackCustomEvent('back_button_clicked', {
-      step_number: currentStep?.step_number,
-      session_id: session?.id
+      step_number: currentStep.step_number,
+      session_id: session.id,
+      result: 'viewing_previous_step'
     })
     
-    // Show a message
-    alert('Going back is not supported in this onboarding flow.')
+    // Find the previous step in history
+    const currentIndex = viewingHistoryIndex !== null 
+      ? viewingHistoryIndex 
+      : stepHistory.findIndex(s => s.step_number === currentStep.step_number)
+    
+    if (currentIndex > 0) {
+      // Show previous step from history
+      const previousStep = stepHistory[currentIndex - 1]
+      setCurrentStep(previousStep)
+      setViewingHistoryIndex(currentIndex - 1)
+    }
   }
 
   if (loading && !currentStep) {
@@ -203,15 +300,17 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ documentId }) => {
 
   const isLastStep = currentStep.step_number === currentStep.total_steps
   const isFirstStep = currentStep.step_number === 1
+  const isViewingHistory = viewingHistoryIndex !== null
+  const isAtCurrentStep = !isViewingHistory || viewingHistoryIndex === stepHistory.length - 1
 
   return (
     <div className="onboarding-flow">
-      {/* Real-time feedback component */}
-      <RealTimeFeedback 
+      {/* Intervention System - monitors engagement and shows help messages */}
+      <InterventionSystem
         sessionId={session?.id}
-        showEngagementScore={true}
-        showInteractionCount={true}
-        showTimeSpent={true}
+        currentStep={currentStep?.step_number}
+        engagementScore={engagementScore}
+        enabled={true}
       />
 
       <div className="onboarding-header">
@@ -228,6 +327,15 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ documentId }) => {
         </p>
       </div>
 
+      {isViewingHistory && !isAtCurrentStep && (
+        <div className="history-banner">
+          <span className="history-icon">👁️</span>
+          <span className="history-text">
+            You're viewing a previous step. Click "Next" to return to your current progress.
+          </span>
+        </div>
+      )}
+
       <ProgressIndicator 
         currentStep={currentStep.step_number}
         totalSteps={currentStep.total_steps}
@@ -238,6 +346,7 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ documentId }) => {
         <StepContent 
           step={currentStep}
           userRole={user?.role || 'Developer'}
+          onCompletionChange={setIsStepComplete}
         />
       </div>
 
@@ -245,10 +354,12 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ documentId }) => {
         isFirstStep={isFirstStep}
         isLastStep={isLastStep}
         loading={loading}
+        isStepComplete={isStepComplete}
         onBack={handleStepBack}
         onNext={handleStepComplete}
         onComplete={handleStepComplete}
         sessionId={session?.id}
+        currentStep={currentStep?.step_number}
       />
 
       {progress.completion_percentage >= 100 && (

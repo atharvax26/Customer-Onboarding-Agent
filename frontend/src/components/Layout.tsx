@@ -20,7 +20,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </main>
       <footer className="footer">
         <div className="container">
-          © 2024 Customer Onboarding Agent. All rights reserved.
+          © 2026 Customer Onboarding Agent. All rights reserved.
         </div>
       </footer>
     </div>

@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\main.py
+# hypothesis_version: 6.151.5
+
+[8000, '*', '/', '/api/analytics', '/api/auth', '/api/engagement', '/api/intervention', '/api/onboarding', '/api/scaledown', '/api/system', '/health', '/health-history', '/health/{component}', '0.0.0.0', '1.0.0', '2024-01-01T00:00:00Z', 'ENABLE_JSON_LOGGING', 'Health check failed', 'INFO', 'LOG_LEVEL', '__main__', 'analytics', 'authentication', 'class', 'component', 'default', 'document-processing', 'engagement', 'error', 'ext://sys.stdout', 'false', 'format', 'formatter', 'formatters', 'handlers', 'health_status', 'history', 'intervention', 'level', 'logs/app.log', 'main', 'message', 'name', 'onboarding', 'root', 'running', 'status', 'stream', 'system-monitoring', 'timestamp', 'true', 'unhealthy', 'version']

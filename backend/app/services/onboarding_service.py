@@ -241,8 +241,12 @@ class OnboardingEngine:
         if not document:
             raise ValueError(f"Document with ID {document_id} not found")
         
-        # Get role configuration
-        total_steps = self.flow_config.get_total_steps(user.role)
+        # Determine total steps: use AI-generated tasks if available, otherwise use role config
+        if document.step_tasks and isinstance(document.step_tasks, list) and len(document.step_tasks) > 0:
+            total_steps = len(document.step_tasks)
+        else:
+            # Fallback to role-based configuration
+            total_steps = self.flow_config.get_total_steps(user.role)
         
         # Create onboarding session
         session_data = OnboardingSessionCreate(
@@ -277,16 +281,20 @@ class OnboardingEngine:
         """
         Get the current step content for an onboarding session
         
+        Uses AI-generated content from the document if available,
+        otherwise falls back to role-based hardcoded steps.
+        
         Args:
             session_id: ID of the onboarding session
             
         Returns:
             OnboardingStepResponse with step content and metadata
         """
-        # Get session with user information
+        # Get session with user and document information
         session_result = await self.db.execute(
-            select(OnboardingSession, User)
+            select(OnboardingSession, User, Document)
             .join(User, OnboardingSession.user_id == User.id)
+            .join(Document, OnboardingSession.document_id == Document.id)
             .where(OnboardingSession.id == session_id)
         )
         result = session_result.first()
@@ -294,9 +302,68 @@ class OnboardingEngine:
         if not result:
             raise ValueError(f"Onboarding session with ID {session_id} not found")
         
-        session, user = result
+        session, user, document = result
         
-        # Get step content based on user role and current step
+        # Debug logging
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.info(f"Getting step for session {session_id}: document_id={document.id}, has_step_tasks={document.step_tasks is not None}, step_tasks_count={len(document.step_tasks) if document.step_tasks else 0}")
+        
+        # Try to use AI-generated content from document first
+        if document.step_tasks and isinstance(document.step_tasks, list) and len(document.step_tasks) > 0:
+            step_index = session.current_step - 1
+            logger.info(f"Using AI-generated content: step_index={step_index}, current_step={session.current_step}")
+            
+            if 0 <= step_index < len(document.step_tasks):
+                ai_task = document.step_tasks[step_index]
+                logger.info(f"AI task data: {ai_task}")
+                
+                # Extract content from AI-generated task
+                title = ai_task.get('title', f'Step {session.current_step}')
+                description = ai_task.get('description', '')
+                
+                # Use document summary as additional context if description is short
+                if len(description) < 50 and document.processed_summary:
+                    summary = document.processed_summary.get('summary', '')
+                    if summary:
+                        description = f"{description}\n\n{summary}" if description else summary
+                
+                # Get subtasks from AI-generated content
+                # Handle different formats: subtasks, tasks, or create from description
+                subtasks = ai_task.get('subtasks', ai_task.get('tasks', []))
+                if not subtasks and description:
+                    # If no subtasks, create a simple task list from the description
+                    subtasks = [description]
+                
+                # Parse estimated_time (could be string like "5 minutes" or integer)
+                estimated_time_raw = ai_task.get('estimated_time', 15)
+                if isinstance(estimated_time_raw, str):
+                    # Extract number from string like "5 minutes" or "10 min"
+                    import re
+                    match = re.search(r'(\d+)', estimated_time_raw)
+                    estimated_time = int(match.group(1)) if match else 15
+                else:
+                    estimated_time = estimated_time_raw
+                
+                logger.info(f"Returning AI-generated step: title='{title}', tasks_count={len(subtasks)}, estimated_time={estimated_time}")
+                
+                # Get tip from AI-generated content
+                tip = ai_task.get('tip', None)
+                
+                return OnboardingStepResponse(
+                    step_number=session.current_step,
+                    total_steps=session.total_steps,
+                    title=title,
+                    content=description,
+                    description=description,
+                    tasks=subtasks,
+                    subtasks=subtasks,
+                    estimated_time=estimated_time,
+                    tip=tip
+                )
+        
+        # Fallback to hardcoded role-based steps if no AI data available
+        logger.info(f"Falling back to hardcoded steps for role {user.role}")
         step_content = self.flow_config.get_step_content(user.role, session.current_step)
         
         if not step_content:
@@ -504,3 +571,4 @@ class OnboardingEngine:
         if session:
             return OnboardingSessionResponse.model_validate(session)
         return None
+

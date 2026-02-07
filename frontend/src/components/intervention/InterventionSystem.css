@@ -1,0 +1,48 @@
+.intervention-system {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  max-width: 400px;
+  pointer-events: none;
+}
+
+.intervention-system > * {
+  pointer-events: auto;
+  margin-bottom: 12px;
+}
+
+.intervention-system:empty {
+  display: none;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .intervention-system {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    max-width: none;
+  }
+}
+
+/* Tablet responsive */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .intervention-system {
+    max-width: 350px;
+    top: 15px;
+    right: 15px;
+  }
+}
+
+/* Ensure intervention system doesn't interfere with other UI elements */
+.intervention-system + .main-content {
+  margin-right: 420px;
+}
+
+@media (max-width: 1024px) {
+  .intervention-system + .main-content {
+    margin-right: 0;
+  }
+}

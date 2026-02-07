@@ -27,6 +27,7 @@ const Navigation: React.FC = () => {
         
         {isAuthenticated ? (
           <>
+            <Link to="/documents" className="nav-link">Documents</Link>
             <Link to="/onboarding" className="nav-link">Onboarding</Link>
             
             {/* Role-based navigation */}
@@ -70,7 +71,5 @@ const Navigation: React.FC = () => {
     </nav>
   )
 }
-
-export default Navigation
 
 export default Navigation

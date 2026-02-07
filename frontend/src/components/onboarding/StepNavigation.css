@@ -78,6 +78,7 @@
   align-items: center;
   justify-content: center;
   min-height: 40px;
+  flex: 1;
 }
 
 .nav-loading {
@@ -117,24 +118,83 @@
   border-top: 1px solid #e2e8f0;
 }
 
-.help-text {
-  color: #718096;
+.completion-reminder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-radius: 0.5rem;
+  border: 1px solid #fbbf24;
+  color: #92400e;
+  font-weight: 500;
   font-size: 0.9rem;
-  margin: 0;
+  animation: pulse 2s ease-in-out infinite;
 }
 
-.help-link {
-  background: none;
-  border: none;
-  color: #667eea;
-  text-decoration: underline;
+.reminder-icon {
+  font-size: 1.2rem;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.reminder-text {
+  flex: 1;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.help-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.contact-support-btn {
+  background: #f7fafc;
+  color: #4a5568;
+  border: 2px solid #cbd5e0;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
   cursor: pointer;
-  font-size: inherit;
-  padding: 0;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.help-link:hover {
-  color: #5a67d8;
+.contact-support-btn:hover {
+  background: #edf2f7;
+  border-color: #a0aec0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.contact-icon {
+  width: 18px;
+  height: 18px;
 }
 
 /* Responsive Design */
@@ -160,6 +220,11 @@
   .nav-icon {
     width: 14px;
     height: 14px;
+  }
+
+  .help-actions {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 

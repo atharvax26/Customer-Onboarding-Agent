@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\error_handlers.py
+# hypothesis_version: 6.151.5
+
+[400, 401, 403, 404, 405, 422, 429, 500, 502, 503, 1000, ' -> ', '/auth/', '/auth/login', '/auth/register', 'AUTHENTICATION_ERROR', 'AUTHORIZATION_ERROR', 'DATABASE_ERROR', 'Database error', 'EXTERNAL_API_ERROR', 'INTERNAL_ERROR', 'Refresh the page', 'Try again later', 'Try logging in again', 'Try submitting again', 'Unexpected error', 'VALIDATION_ERROR', 'Validation error', 'Z', 'api_error', 'client_ip', 'code', 'critical_error', 'detail', 'details', 'error', 'error_code', 'error_handler', 'error_message', 'error_type', 'field', 'ignore', 'loc', 'message', 'method', 'msg', 'path', 'recovery_actions', 'referer', 'request_body', 'request_id', 'status_code', 'suggestions', 'timestamp', 'traceback', 'type', 'unknown', 'user-agent', 'user_agent', 'user_message', 'utf-8', 'validation_errors']

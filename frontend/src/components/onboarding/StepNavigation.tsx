@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import InteractionTracker from '../tracking/InteractionTracker'
 import './StepNavigation.css'
 
@@ -6,21 +7,31 @@ interface StepNavigationProps {
   isFirstStep: boolean
   isLastStep: boolean
   loading: boolean
+  isStepComplete: boolean
   onBack: () => void
   onNext: () => void
   onComplete: () => void
   sessionId?: number
+  currentStep?: number // Used for tracking
 }
 
 const StepNavigation: React.FC<StepNavigationProps> = ({
   isFirstStep,
   isLastStep,
   loading,
+  isStepComplete,
   onBack,
   onNext,
   onComplete,
-  sessionId
+  sessionId,
+  currentStep
 }) => {
+  const navigate = useNavigate()
+
+  const handleContactUs = () => {
+    navigate('/contact')
+  }
+
   return (
     <div className="step-navigation">
       <div className="nav-buttons">
@@ -43,14 +54,14 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
           </button>
         </InteractionTracker>
 
-        <div className="nav-center">
-          {loading && (
+        {loading && (
+          <div className="nav-center">
             <div className="nav-loading">
               <div className="nav-spinner"></div>
               <span>Processing...</span>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {isLastStep ? (
           <InteractionTracker 
@@ -58,12 +69,13 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
             trackHovers={true}
             eventPrefix="navigation"
             sessionId={sessionId}
-            additionalData={{ button_type: 'complete', disabled: loading }}
+            additionalData={{ button_type: 'complete', disabled: loading || !isStepComplete }}
           >
             <button
               className="nav-button complete-button"
               onClick={onComplete}
-              disabled={loading}
+              disabled={loading || !isStepComplete}
+              title={!isStepComplete ? 'Complete all tasks to finish onboarding' : 'Complete onboarding'}
             >
               {loading ? (
                 <>
@@ -86,12 +98,13 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
             trackHovers={true}
             eventPrefix="navigation"
             sessionId={sessionId}
-            additionalData={{ button_type: 'next', disabled: loading }}
+            additionalData={{ button_type: 'next', disabled: loading || !isStepComplete }}
           >
             <button
               className="nav-button next-button"
               onClick={onNext}
-              disabled={loading}
+              disabled={loading || !isStepComplete}
+              title={!isStepComplete ? 'Complete all tasks to continue' : 'Continue to next step'}
             >
               {loading ? (
                 <>
@@ -112,16 +125,30 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
       </div>
 
       <div className="nav-help">
-        <p className="help-text">
-          Need help? 
+        {!isStepComplete && (
+          <div className="completion-reminder">
+            <span className="reminder-icon">✓</span>
+            <span className="reminder-text">Complete all tasks above to continue</span>
+          </div>
+        )}
+        <div className="help-actions">
           <InteractionTracker 
             trackClicks={true}
             eventPrefix="help"
             sessionId={sessionId}
           >
-            <button className="help-link">Contact Support</button>
+            <button 
+              className="help-link contact-support-btn"
+              onClick={handleContactUs}
+            >
+              <svg className="contact-icon" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+              </svg>
+              Contact Us
+            </button>
           </InteractionTracker>
-        </p>
+        </div>
       </div>
     </div>
   )

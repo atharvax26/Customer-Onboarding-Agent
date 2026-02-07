@@ -108,10 +108,10 @@ class TestScaleDownIntegration:
             # Test processing failure
             from fastapi import HTTPException
             with pytest.raises(HTTPException) as exc_info:
-                await service.process_document_with_claude(1, mock_db)
+                await service.process_document_with_scaledown_ai(1, mock_db)
             
             assert exc_info.value.status_code == 503
-            assert "Claude API client not available" in str(exc_info.value.detail)
+            assert "ScaleDown.ai API client not available" in str(exc_info.value.detail)
     
     def test_get_document_stats(self):
         """Test document statistics generation"""
@@ -136,12 +136,12 @@ class TestScaleDownIntegration:
         assert stats['processing_status'] == 'processed'
     
     @pytest.mark.asyncio
-    async def test_get_claude_health_unavailable(self):
-        """Test Claude health check when client unavailable"""
+    async def test_get_scaledown_ai_health_unavailable(self):
+        """Test ScaleDown.ai health check when client unavailable"""
         service = ScaleDownService()
-        service.claude_client = None
+        service.scaledown_ai_client = None
         
-        result = await service.get_claude_health()
+        result = await service.get_scaledown_ai_health()
         
         assert result['status'] == 'unavailable'
-        assert 'Claude API client not configured' in result['error']
+        assert 'ScaleDown.ai API client not configured' in result['error']

@@ -1,0 +1,149 @@
+.documents-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.documents-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.documents-header h1 {
+  margin: 0 0 1rem 0;
+  font-size: 2.5rem;
+  color: #333;
+  font-weight: 700;
+}
+
+.documents-header p {
+  margin: 0;
+  font-size: 1.125rem;
+  color: #666;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.documents-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.upload-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.upload-section h2 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  color: #333;
+  text-align: center;
+}
+
+.documents-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.selected-document-info {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e0e0e0;
+  max-width: 300px;
+  z-index: 100;
+}
+
+.selected-document-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.125rem;
+  color: #333;
+}
+
+.selected-document-info p {
+  margin: 0 0 1rem 0;
+  font-size: 0.875rem;
+  color: #666;
+  word-break: break-word;
+}
+
+.start-onboarding-button {
+  width: 100%;
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.start-onboarding-button:hover:not(:disabled) {
+  background: #218838;
+}
+
+.start-onboarding-button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .documents-page {
+    padding: 1rem 0.5rem;
+  }
+  
+  .documents-header h1 {
+    font-size: 2rem;
+  }
+  
+  .documents-header p {
+    font-size: 1rem;
+  }
+  
+  .upload-section,
+  .documents-section {
+    padding: 1.5rem;
+  }
+  
+  .selected-document-info {
+    position: static;
+    margin-top: 2rem;
+    max-width: none;
+  }
+  
+  .documents-content {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .documents-page {
+    padding: 1rem 0.25rem;
+  }
+  
+  .upload-section,
+  .documents-section {
+    padding: 1rem;
+  }
+  
+  .documents-header h1 {
+    font-size: 1.75rem;
+  }
+}

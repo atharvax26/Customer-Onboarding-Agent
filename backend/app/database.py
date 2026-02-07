@@ -45,6 +45,7 @@ class User(Base):
     is_active = Column(Boolean, default=True)
     
     # Relationships
+    documents = relationship("Document", back_populates="user")
     onboarding_sessions = relationship("OnboardingSession", back_populates="user")
     engagement_logs = relationship("EngagementLog", back_populates="user")
     intervention_logs = relationship("InterventionLog", back_populates="user")
@@ -54,15 +55,17 @@ class Document(Base):
     __tablename__ = "documents"
     
     id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     filename = Column(String, nullable=False)
     original_content = Column(Text, nullable=False)
     processed_summary = Column(JSON)
     step_tasks = Column(JSON)
     uploaded_at = Column(DateTime, default=datetime.utcnow)
     file_size = Column(Integer)
-    content_hash = Column(String, unique=True, index=True)
+    content_hash = Column(String, index=True)  # Removed unique constraint to allow same doc for different users
     
     # Relationships
+    user = relationship("User", back_populates="documents")
     onboarding_sessions = relationship("OnboardingSession", back_populates="document")
 
 

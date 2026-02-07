@@ -1,0 +1,229 @@
+.help-message {
+  position: relative;
+  background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%);
+  border: 1px solid #d1e7ff;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease-out;
+  max-width: 500px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.help-message--contextual-help {
+  border-color: #4f46e5;
+  background: linear-gradient(135deg, #f0f0ff 0%, #e0e7ff 100%);
+}
+
+.help-message--low-engagement-help {
+  border-color: #f59e0b;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+}
+
+.help-message--generic-help {
+  border-color: #6b7280;
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+}
+
+.help-message__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.help-message__icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.help-message__title {
+  font-weight: 600;
+  font-size: 16px;
+  color: #374151;
+  flex: 1;
+}
+
+.help-message__close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.help-message__close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #374151;
+}
+
+.help-message__content {
+  margin-bottom: 12px;
+}
+
+.help-message__content p {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.help-message__context {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.help-message__context small {
+  color: #6b7280;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.help-message__actions {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 12px;
+  margin-top: 12px;
+}
+
+.help-message__feedback-toggle {
+  background: none;
+  border: 1px solid #d1d5db;
+  color: #4b5563;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.help-message__feedback-toggle:hover {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.help-message__feedback {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.help-message__feedback-label {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.help-message__feedback-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.help-message__feedback-button {
+  background: none;
+  border: 1px solid #d1d5db;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.help-message__feedback-button:hover {
+  background-color: #f3f4f6;
+}
+
+.help-message__feedback-button--yes:hover {
+  background-color: #dcfce7;
+  border-color: #16a34a;
+  color: #16a34a;
+}
+
+.help-message__feedback-button--no:hover {
+  background-color: #fef2f2;
+  border-color: #dc2626;
+  color: #dc2626;
+}
+
+.help-message__feedback-success {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #16a34a;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .help-message {
+    margin: 12px 0;
+    padding: 12px;
+    max-width: 100%;
+  }
+
+  .help-message__feedback {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .help-message__feedback-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .help-message__feedback-button {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .help-message {
+    border-width: 2px;
+    background: white;
+  }
+
+  .help-message__title {
+    color: black;
+  }
+
+  .help-message__content p {
+    color: black;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .help-message {
+    animation: none;
+  }
+
+  .help-message__close,
+  .help-message__feedback-toggle,
+  .help-message__feedback-button {
+    transition: none;
+  }
+}

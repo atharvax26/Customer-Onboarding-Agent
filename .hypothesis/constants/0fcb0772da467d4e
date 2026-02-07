@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\routers\intervention.py
+# hypothesis_version: 6.151.5
+
+[100, '/check/{session_id}', '/configure', '/feedback', '/history', '/history/{user_id}', '/manual-help', '/status', 'Admin', 'active_users_count', 'help_message', 'message', 'monitoring_active', 'now', 'success', 'triggered_at']

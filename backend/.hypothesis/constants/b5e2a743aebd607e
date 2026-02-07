@@ -1,0 +1,4 @@
+# file: C:\Users\RUPESH\Documents\Customer Onboarding Project\Customer-Onboarding-Agent\backend\app\exceptions.py
+# hypothesis_version: 6.151.5
+
+['AUTHENTICATION_ERROR', 'AUTHORIZATION_ERROR', 'Access denied', 'Bearer', 'DATABASE_ERROR', 'EXTERNAL_API_ERROR', 'Invalid credentials', 'ONBOARDING_ERROR', 'RATE_LIMIT_ERROR', 'Rate limit exceeded', 'SYSTEM_HEALTH_ERROR', 'VALIDATION_ERROR', 'WWW-Authenticate']

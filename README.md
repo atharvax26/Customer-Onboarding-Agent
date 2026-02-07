@@ -4,7 +4,7 @@ A single-tenant SaaS platform that transforms product documentation into persona
 
 ## Features
 
-- **AI-Powered Document Processing**: Uses Claude API to process documentation into summaries and actionable tasks
+- **AI-Powered Document Processing**: Uses ScaleDown.ai API to process documentation into summaries and actionable tasks
 - **Role-Based Onboarding**: Customized flows for Developers (5 steps), Business Users (3 steps), and Admins
 - **Real-Time Engagement Scoring**: Monitors user activity and calculates engagement scores
 - **Automated Interventions**: Provides contextual help when engagement drops below threshold
@@ -14,7 +14,7 @@ A single-tenant SaaS platform that transforms product documentation into persona
 
 - **Backend**: FastAPI with SQLAlchemy and SQLite
 - **Frontend**: React with Vite and TypeScript
-- **AI Integration**: Anthropic Claude API for document processing
+- **AI Integration**: ScaleDown.ai API for specialized document intelligence
 - **Testing**: pytest + Hypothesis (backend), Vitest + Testing Library (frontend)
 
 ## Quick Start
@@ -23,7 +23,7 @@ A single-tenant SaaS platform that transforms product documentation into persona
 
 - Python 3.11+
 - Node.js 18+
-- Claude API key from Anthropic
+- ScaleDown.ai API key
 
 ### Installation
 
@@ -36,7 +36,7 @@ cd customer-onboarding-agent
 2. Set up environment variables:
 ```bash
 cp .env.example .env
-# Edit .env with your Claude API key and other configuration
+# Edit .env with your ScaleDown.ai API key and other configuration
 ```
 
 3. Start with Docker Compose:

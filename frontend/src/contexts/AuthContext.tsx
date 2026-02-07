@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { apiClient } from '../services/apiClient'
 import { 
   isTokenExpired, 
   clearAuthStorage, 
@@ -65,20 +66,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (email: string, password: string): Promise<void> => {
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      })
-
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.detail || 'Login failed')
-      }
-
-      const data = await response.json()
+      const data = await apiClient.auth.login({ email, password })
       
       setToken(data.access_token)
       setUser(data.user)
@@ -93,20 +81,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const register = async (email: string, password: string, role: User['role']): Promise<void> => {
     try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password, role }),
-      })
-
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.detail || 'Registration failed')
-      }
-
-      const data = await response.json()
+      const data = await apiClient.auth.register({ email, password, role })
       
       setToken(data.access_token)
       setUser(data.user)
@@ -119,10 +94,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }
 
-  const logout = () => {
-    setUser(null)
-    setToken(null)
-    clearAuthStorage()
+  const logout = async () => {
+    try {
+      await apiClient.auth.logout()
+    } catch (error) {
+      console.error('Logout error:', error)
+      // Continue with local logout even if server logout fails
+    } finally {
+      setUser(null)
+      setToken(null)
+      clearAuthStorage()
+    }
   }
 
   const value: AuthContextType = {

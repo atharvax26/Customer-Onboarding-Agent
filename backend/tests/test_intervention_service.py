@@ -50,28 +50,25 @@ class TestInterventionSystem:
         await db_session.refresh(session)
         return session
     
-    @pytest.mark.asyncio
-    async def test_should_intervene_score_above_threshold(self, intervention_system):
+    def test_should_intervene_score_above_threshold(self, intervention_system):
         """Test that intervention is not triggered when score is above threshold"""
         user_id = 1
         engagement_score = 50.0  # Above threshold of 30
         
-        result = await intervention_system._should_intervene(user_id, engagement_score)
+        result = intervention_system._should_intervene(user_id, engagement_score)
         
         assert result is False
     
-    @pytest.mark.asyncio
-    async def test_should_intervene_score_below_threshold(self, intervention_system):
+    def test_should_intervene_score_below_threshold(self, intervention_system):
         """Test that intervention is triggered when score is below threshold"""
         user_id = 1
         engagement_score = 25.0  # Below threshold of 30
         
-        result = await intervention_system._should_intervene(user_id, engagement_score)
+        result = intervention_system._should_intervene(user_id, engagement_score)
         
         assert result is True
     
-    @pytest.mark.asyncio
-    async def test_should_intervene_deduplication_window(self, intervention_system):
+    def test_should_intervene_deduplication_window(self, intervention_system):
         """Test that intervention is blocked within deduplication window"""
         user_id = 1
         engagement_score = 25.0  # Below threshold
@@ -79,12 +76,11 @@ class TestInterventionSystem:
         # Set recent intervention
         intervention_system.last_interventions[user_id] = datetime.utcnow() - timedelta(minutes=2)
         
-        result = await intervention_system._should_intervene(user_id, engagement_score)
+        result = intervention_system._should_intervene(user_id, engagement_score)
         
         assert result is False  # Should be blocked by deduplication
     
-    @pytest.mark.asyncio
-    async def test_should_intervene_after_deduplication_window(self, intervention_system):
+    def test_should_intervene_after_deduplication_window(self, intervention_system):
         """Test that intervention is allowed after deduplication window"""
         user_id = 1
         engagement_score = 25.0  # Below threshold
@@ -92,7 +88,7 @@ class TestInterventionSystem:
         # Set old intervention (beyond deduplication window)
         intervention_system.last_interventions[user_id] = datetime.utcnow() - timedelta(minutes=10)
         
-        result = await intervention_system._should_intervene(user_id, engagement_score)
+        result = intervention_system._should_intervene(user_id, engagement_score)
         
         assert result is True  # Should be allowed after window
     

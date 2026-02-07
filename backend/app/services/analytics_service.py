@@ -283,7 +283,7 @@ class AnalyticsService:
         return {
             "active_sessions": active_sessions,
             "total_sessions": total_sessions,
-            "recent_interventions": recent_interventions,
+            "total_interventions_today": recent_interventions,
             "average_engagement_24h": round(float(avg_engagement), 2),
             "last_updated": datetime.utcnow()
         }

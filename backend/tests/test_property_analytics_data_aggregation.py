@@ -30,12 +30,9 @@ TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
 # Hypothesis strategies for generating test data
 user_role_strategy = st.sampled_from([UserRole.DEVELOPER, UserRole.BUSINESS_USER, UserRole.ADMIN])
 
-# Generate unique emails using UUIDs and timestamps to avoid duplicates
+# Generate unique emails using UUIDs to ensure uniqueness
 email_strategy = st.builds(
-    lambda uuid_part, domain, timestamp: f"user_{uuid_part}_{timestamp}@{domain}.com",
-    uuid_part=st.text(alphabet=st.characters(whitelist_categories=("Ll", "Lu", "Nd")), min_size=8, max_size=12),
-    domain=st.text(alphabet=st.characters(whitelist_categories=("Ll",)), min_size=2, max_size=10),
-    timestamp=st.integers(min_value=1000000, max_value=9999999)
+    lambda: f"user_{uuid.uuid4().hex[:12]}@test.com"
 )
 
 session_status_strategy = st.sampled_from([SessionStatus.ACTIVE, SessionStatus.COMPLETED, SessionStatus.ABANDONED])
@@ -119,8 +116,8 @@ async def test_property_analytics_activation_rate_calculation(users_data, sessio
         test_run_id = str(uuid.uuid4())[:8]
         
         for i, user_data in enumerate(users_data):
-            # Make email unique by adding test run ID and index
-            unique_email = f"test_{test_run_id}_{i}_{user_data['email']}"
+            # Make email unique by using UUID
+            unique_email = f"test_{test_run_id}_{i}_{uuid.uuid4().hex[:8]}@test.com"
             
             user = User(
                 email=unique_email,
@@ -228,6 +225,7 @@ async def test_property_analytics_filtering_accuracy(users_data, filter_role, da
         
         created_users = []
         expected_filtered_count = 0
+        test_run_id = str(uuid.uuid4())[:8]
         
         for i, user_data in enumerate(users_data):
             # Vary creation dates - some within filter range, some outside
@@ -236,8 +234,11 @@ async def test_property_analytics_filtering_accuracy(users_data, filter_role, da
             else:
                 creation_date = filter_start_date - timedelta(days=i + 1)  # Outside range
             
+            # Create unique email for each user
+            unique_email = f"test_{test_run_id}_{i}_{uuid.uuid4().hex[:8]}@test.com"
+            
             user = User(
-                email=user_data["email"],
+                email=unique_email,
                 password_hash="test_hash",
                 role=user_data["role"],
                 created_at=creation_date,
@@ -301,8 +302,9 @@ async def test_property_analytics_dropoff_analysis_accuracy(sessions_data, max_s
         analytics_service = AnalyticsService(db)
         
         # Create a test user first
+        unique_email = f"test_{uuid.uuid4().hex[:12]}@example.com"
         user = User(
-            email="test@example.com",
+            email=unique_email,
             password_hash="test_hash",
             role=UserRole.DEVELOPER,
             created_at=datetime.now(),
@@ -406,8 +408,9 @@ async def test_property_analytics_engagement_trends_aggregation(engagement_logs_
         analytics_service = AnalyticsService(db)
         
         # Create a test user
+        unique_email = f"test_{uuid.uuid4().hex[:12]}@example.com"
         user = User(
-            email="test@example.com",
+            email=unique_email,
             password_hash="test_hash",
             role=UserRole.DEVELOPER,
             created_at=datetime.now(),
@@ -495,9 +498,11 @@ async def test_property_analytics_real_time_metrics_accuracy(user_count, session
         
         # Create users
         created_users = []
+        test_run_id = str(uuid.uuid4())[:8]
         for i in range(user_count):
+            unique_email = f"user_{test_run_id}_{i}_{uuid.uuid4().hex[:8]}@example.com"
             user = User(
-                email=f"user{i}@example.com",
+                email=unique_email,
                 password_hash="test_hash",
                 role=UserRole.DEVELOPER,
                 created_at=datetime.now(),

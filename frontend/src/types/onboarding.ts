@@ -15,8 +15,11 @@ export interface OnboardingStep {
   total_steps: number
   title: string
   content: string
+  description?: string
   tasks: string[]
+  subtasks?: string[]
   estimated_time: number
+  tip?: string
 }
 
 export interface StepCompletion {

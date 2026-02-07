@@ -74,13 +74,13 @@ class DocumentCreate(DocumentBase):
 
 class DocumentUpdate(BaseSchema):
     processed_summary: Optional[Dict[str, Any]] = None
-    step_tasks: Optional[List[str]] = None
+    step_tasks: Optional[List[Dict[str, Any]]] = None
 
 
 class DocumentResponse(DocumentBase):
     id: int
     processed_summary: Optional[Dict[str, Any]] = None
-    step_tasks: Optional[List[str]] = None
+    step_tasks: Optional[List[Dict[str, Any]]] = None
     uploaded_at: datetime
     content_hash: str
 
@@ -89,7 +89,7 @@ class ProcessedDocumentResponse(BaseSchema):
     id: int
     filename: str
     summary: str
-    tasks: List[str]
+    tasks: List[Dict[str, Any]]
     processing_time: float
 
 
@@ -189,8 +189,11 @@ class OnboardingStepResponse(BaseSchema):
     total_steps: int
     title: str
     content: str
+    description: Optional[str] = None
     tasks: List[str]
+    subtasks: Optional[List[str]] = None
     estimated_time: int
+    tip: Optional[str] = None
 
 
 class OnboardingProgressResponse(BaseSchema):

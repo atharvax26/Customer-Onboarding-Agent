@@ -85,7 +85,7 @@ async def test_property_intervention_threshold_triggering(
     system.last_interventions.clear()
     
     # Test the threshold logic
-    should_trigger = await system._should_intervene(user_id, engagement_score)
+    should_trigger = system._should_intervene(user_id, engagement_score)
     
     # Verify threshold behavior
     if engagement_score < 30.0:
@@ -98,10 +98,10 @@ async def test_property_intervention_threshold_triggering(
         )
     
     # Test that threshold is exactly 30 (boundary condition)
-    boundary_result = await system._should_intervene(user_id, 30.0)
+    boundary_result = system._should_intervene(user_id, 30.0)
     assert boundary_result is False, "Score of exactly 30.0 should NOT trigger intervention"
     
-    just_below_result = await system._should_intervene(user_id, 29.999)
+    just_below_result = system._should_intervene(user_id, 29.999)
     assert just_below_result is True, "Score just below 30.0 should trigger intervention"
 
 
@@ -135,7 +135,7 @@ async def test_property_intervention_deduplication_window(
     system.last_interventions[user_id] = last_intervention_time
     
     # Test intervention decision
-    should_trigger = await system._should_intervene(user_id, current_score)
+    should_trigger = system._should_intervene(user_id, current_score)
     
     # Verify deduplication logic
     if time_since_last_minutes < 5:
@@ -151,11 +151,11 @@ async def test_property_intervention_deduplication_window(
     
     # Test exact boundary conditions
     system.last_interventions[user_id] = datetime.utcnow() - timedelta(minutes=5, seconds=1)
-    boundary_result = await system._should_intervene(user_id, current_score)
+    boundary_result = system._should_intervene(user_id, current_score)
     assert boundary_result is True, "Intervention should be allowed after exactly 5 minutes + 1 second"
     
     system.last_interventions[user_id] = datetime.utcnow() - timedelta(minutes=4, seconds=59)
-    boundary_result = await system._should_intervene(user_id, current_score)
+    boundary_result = system._should_intervene(user_id, current_score)
     assert boundary_result is False, "Intervention should be blocked at 4 minutes 59 seconds"
 
 
@@ -346,7 +346,7 @@ async def test_property_multiple_threshold_crossings(
         with patch('app.services.intervention_service.datetime') as mock_datetime:
             mock_datetime.utcnow.return_value = current_time
             
-            should_trigger = await system._should_intervene(user_id, score)
+            should_trigger = system._should_intervene(user_id, score)
             
             if should_trigger:
                 intervention_count += 1
@@ -503,7 +503,7 @@ async def test_property_intervention_threshold_boundary_conditions():
         # Clear history for each test
         system.last_interventions.clear()
         
-        result = await system._should_intervene(user_id, score)
+        result = system._should_intervene(user_id, score)
         assert result == expected_trigger, f"{description}: score {score}, got {result}"
     
     print("✓ Intervention threshold boundary conditions verified")
@@ -535,7 +535,7 @@ async def test_property_deduplication_window_boundary_conditions():
         # Set last intervention time
         system.last_interventions[user_id] = datetime.utcnow() - time_delta
         
-        result = await system._should_intervene(user_id, low_score)
+        result = system._should_intervene(user_id, low_score)
         assert result == expected_trigger, f"{description}: delta {time_delta}, got {result}"
     
     print("✓ Deduplication window boundary conditions verified")

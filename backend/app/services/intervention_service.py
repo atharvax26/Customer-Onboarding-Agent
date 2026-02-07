@@ -106,7 +106,7 @@ class InterventionSystem:
             )
             
             # Check if intervention is needed
-            if await self._should_intervene(user_id, current_score):
+            if self._should_intervene(user_id, current_score):
                 # Get step context
                 context = await self._get_step_context(db, user_id, session_id)
                 
@@ -125,13 +125,15 @@ class InterventionSystem:
             user_id: ID of the user to monitor
         """
         try:
-            # Get user's active onboarding session
+            # Get user's active onboarding session (get the most recent one if multiple exist)
             result = await db.execute(
                 select(OnboardingSession)
                 .where(
                     OnboardingSession.user_id == user_id,
                     OnboardingSession.status == SessionStatus.ACTIVE
                 )
+                .order_by(desc(OnboardingSession.started_at))
+                .limit(1)
             )
             session = result.scalar_one_or_none()
             
@@ -147,7 +149,7 @@ class InterventionSystem:
             )
             
             # Check if intervention is needed
-            if await self._should_intervene(user_id, current_score):
+            if self._should_intervene(user_id, current_score):
                 # Get step context
                 context = await self._get_step_context(db, user_id, session.id)
                 
@@ -204,7 +206,7 @@ class InterventionSystem:
             await db.rollback()
             raise
             
-    async def _should_intervene(self, user_id: int, engagement_score: float) -> bool:
+    def _should_intervene(self, user_id: int, engagement_score: float) -> bool:
         """
         Determine if intervention is needed based on score and deduplication rules
         
