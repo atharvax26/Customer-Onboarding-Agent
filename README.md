@@ -182,6 +182,31 @@ npm run dev
 
 ## 🚢 Deployment
 
+### GitHub Actions CI/CD
+
+The project includes automated CI/CD pipelines that run on every push to `main` or `develop` branches.
+
+#### Setting Up GitHub Secrets
+
+For the CI/CD pipeline to work properly, you need to add your Gemini API key as a GitHub secret:
+
+1. Go to your GitHub repository
+2. Click **Settings** → **Secrets and variables** → **Actions**
+3. Click **New repository secret**
+4. Add the following secret:
+   - Name: `GEMINI_API_KEY`
+   - Value: Your Gemini API key
+
+#### CI/CD Pipeline
+
+The pipeline includes:
+- **Backend Tests**: Runs pytest with environment variables
+- **Frontend Tests**: Runs Vitest tests and linting
+- **Build**: Ensures frontend builds successfully
+- **Integration Tests**: Currently disabled (to be implemented)
+
+**Note**: Tests are currently set to `continue-on-error: true` to allow the pipeline to complete even if some tests fail. This is temporary during development.
+
 ### Docker
 ```bash
 docker-compose up -d
